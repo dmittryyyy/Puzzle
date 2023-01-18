@@ -20,8 +20,8 @@ const Puzzle = (props) => {
 
     return (
         <div>
-            <div className='tile-wrapper' style={tileWrapperStyle}>
-                <div className='tile-container' style={tileContainerStyle}>
+            <div className='tiles-wrapper' style={tileWrapperStyle}>
+                <div className='tiles' style={tileContainerStyle}>
                     {
                         props.tiles.map((t, idx) =>
                             <TileView key={idx}

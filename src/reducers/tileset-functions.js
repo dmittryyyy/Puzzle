@@ -1,4 +1,3 @@
-
 import shuffle from 'shuffle-array';
 
 export function generateTileSet(size) {

@@ -14,12 +14,10 @@ function TileView(props) {
     }
 
     if (props.correctPos) {
-        // Use a special style as a hint on that the tile is on
-        // the correct position
         style = {
             ...style,
-            outline: '1px solid white',
-            outlineOffset: '-10px',
+            outline: 'none',
+            outlineOffset: '0',
         }
     }
 

@@ -1,6 +1,6 @@
 import { configs } from '../configs';
 import {
-    INIT_GAME, NAME_CHANGED, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES
+    INIT_GAME, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES
 } from './actions';
 import { allTilesAreAligned, generateTileSet, reverseTileSet, shuffleTileSet, swapTilesInSet } from './tileset-functions';
 
@@ -12,6 +12,8 @@ const initialState = {
     imageNumber: 1,
     tiles: [],
     size: undefined,
+    gameId: undefined,
+    gameName: undefined,
 };
 
 function tileGame(state = initialState, action) {
@@ -25,7 +27,6 @@ function tileGame(state = initialState, action) {
                     gameName: configs[action.gameId].name,
                     imageNumber: action.imageNumber,
                     tiles: generateTileSet(size),
-                    highScoreListId: configs[action.gameId].highscorelistid
                 });
         }
 
@@ -58,15 +59,8 @@ function tileGame(state = initialState, action) {
             const setWithSwappedTiles = swapTilesInSet(newTiles, state.selectedId, action.id);
             const gameComplete = allTilesAreAligned(setWithSwappedTiles);
 
-            if (gameComplete) {
-                return Object.assign({}, state, {
-                    numClicksWithinTurn: 0,
-                    gameComplete,
-                    turnNo: state.turnNo + 1,
-                    tiles: setWithSwappedTiles,
-                });
-            }
             return Object.assign({}, state, {
+                selectedId: undefined,
                 numClicksWithinTurn: 0,
                 gameComplete,
                 turnNo: state.turnNo + 1,
@@ -84,11 +78,6 @@ function tileGame(state = initialState, action) {
             return Object.assign({}, state, { tiles: newTiles });
         }
 
-        case NAME_CHANGED: {
-            return Object.assign({}, state, {
-                userName: action.name
-            });
-        }
         default:
             return state;
     }
