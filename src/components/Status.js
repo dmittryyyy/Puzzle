@@ -1,26 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 const Status = props => {
     if (props.gameComplete) {
-        return <div className='game-status'>
-            <div>GAME COMPLETE!</div>
-            <div>You used {props.turnNo - 1} turns to put the puzzle together</div>
+        return <div className='status'>
+            <h2 className='status__title'>GAME COMPLETE!</h2>
+            <p>You used turns to put the puzzle together</p>
+            <div className='status__count'>{props.turnNo}</div>
+        </div>
+    } else if (props.turnNo > 2) {
+        return <div className='status'>
+            <p>Turn:</p>
+            <div className='status__count'>{props.turnNo - 1}</div>
         </div>
     } else {
-        return <div className='game-status'>
-            Turn: <b>{props.turnNo}</b>
-            <div className='game-instructions'>
+        return <div className='status'>
+            <p>Turn:</p>
+            <div className='status__count'>{props.turnNo - 1}</div>
+            <div className='status__instructions'>
                 {props.numClicksWithinTurn === 0 &&
-                    <div>
+                    <p>
                         Click on the tile that should be moved
-                    </div>
+                    </p>
                 }
                 {props.numClicksWithinTurn === 1 &&
-                    <div>
+                    <p>
                         Click on the tile that should be swapped with the first selected tile
-                    </div>
+                    </p>
                 }
             </div>
         </div>

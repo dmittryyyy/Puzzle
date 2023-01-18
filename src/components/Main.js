@@ -3,15 +3,17 @@ import Header from './Header';
 import StatusView from './Status';
 import PuzzleView from './Puzzle';
 import RestartBlock from './RestartBlock';
+import Footer from './Footer';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Main = (props) =>
-    <div className='game'>
+    <div className='main'>
         <Header gameName={props.gameName}/>
         <StatusView />
         <PuzzleView />
         <RestartBlock />
+        <Footer />
     </div>
 
 Main.propTypes = {
