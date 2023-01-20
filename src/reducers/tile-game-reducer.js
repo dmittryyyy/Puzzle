@@ -2,7 +2,13 @@ import { configs } from '../configs';
 import {
     INIT_GAME, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES
 } from './actions';
-import { allTilesAreAligned, generateTileSet, reverseTileSet, shuffleTileSet, swapTilesInSet } from './tileset-functions';
+import {
+    allTilesAreAligned,
+    generateTileSet,
+    reverseTileSet,
+    shuffleTileSet,
+    swapTilesInSet
+} from './tileset-functions';
 
 const initialState = {
     turnNo: 1,
@@ -14,6 +20,7 @@ const initialState = {
     size: undefined,
     gameId: undefined,
     gameName: undefined,
+    typePuzzle: null,
 };
 
 function tileGame(state = initialState, action) {
@@ -27,6 +34,7 @@ function tileGame(state = initialState, action) {
                     gameName: configs[action.gameId].name,
                     imageNumber: action.imageNumber,
                     tiles: generateTileSet(size),
+                    typePuzzle: action.typePuzzle,
                 });
         }
 
