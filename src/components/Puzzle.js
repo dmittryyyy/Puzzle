@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import TileView from './TileView'
+import { connect } from 'react-redux';
+import TileView from './TileView';
 import { selectTile } from '../reducers/actions';
 import PropTypes from 'prop-types';
 import {
     useWindowSize
-} from '@react-hook/window-size/throttled'
+} from '@react-hook/window-size/throttled';
 
 const Puzzle = (props) => {
     const [winWidth, winHeight] = useWindowSize();

@@ -1,6 +1,6 @@
 import { configs } from '../configs';
 import {
-    INIT_GAME, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES
+    INIT_GAME, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES, TYPE_GAME
 } from './actions';
 import {
     allTilesAreAligned,
@@ -25,6 +25,13 @@ const initialState = {
 
 function tileGame(state = initialState, action) {
     switch (action.type) {
+        case TYPE_GAME: {
+            return Object.assign({}, initialState,
+                {
+                    typePuzzle: action.typePuzzle,
+                })
+        }
+
         case INIT_GAME: {
             const size = configs[action.gameId].size
             return Object.assign({}, initialState,
