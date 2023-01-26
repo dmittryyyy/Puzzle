@@ -4,7 +4,8 @@ import StartBlock from './StartBlock';
 import Footer from './Footer';
 import PropTypes from 'prop-types';
 import {connect } from 'react-redux';
-import { typeGame } from '../reducers/actions';
+import { typeGame, shuffleTiles } from '../reducers/actions';
+import { TypePuzzle_Click, TypePuzzle_Move } from '../constants';
 
 const Main = (props) =>
     <div className='main'>
@@ -12,8 +13,8 @@ const Main = (props) =>
         {!props.typePuzzle ?
             <div className='start-block'>
                 <div className="start-block__buttons">
-                    <button className="button" onClick={(e) => props.changedPuzzle(e)}>Easy</button>
-                    <button className="button" onClick={(e) => props.changedPuzzle(e)}>Standard</button>
+                    <button className="button" onClick={() => props.changedPuzzle(TypePuzzle_Click)}>Easy</button>
+                    <button className="button" onClick={() => props.changedPuzzle(TypePuzzle_Move)}>Standard</button>
                 </div>
             </div> : ''
         }
@@ -37,8 +38,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changedPuzzle: (e) => {
-            dispatch(typeGame(e.target.innerHTML));
+        changedPuzzle: (typePuzzle) => {
+            dispatch(typeGame(typePuzzle));
+            dispatch(shuffleTiles());
         }
     }
 }

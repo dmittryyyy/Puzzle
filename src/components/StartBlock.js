@@ -4,9 +4,9 @@ import PuzzleClick from './puzzles/PuzzleClick';
 import PuzzleMove from './puzzles/PuzzleMove';
 
 const StartBlock = (props) => {
-    if (props.typePuzzle === 'Easy') {
+    if (props.typePuzzle === 'click') {
         return <PuzzleClick typePuzzle={props.typePuzzle}/>
-    } else if (props.typePuzzle === 'Standard') {
+    } else if (props.typePuzzle === 'move') {
         return <PuzzleMove typePuzzle={props.typePuzzle}/>
     }
 }

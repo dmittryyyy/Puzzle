@@ -8,8 +8,8 @@ export function typeGame(typePuzzle) {
     return { type: TYPE_GAME, typePuzzle };
 }
 
-export function initGame(gameId, imageNumber) {
-    return { type: INIT_GAME, gameId, imageNumber };
+export function initGame(gameId, imageNumber, typePuzzle) {
+    return { type: INIT_GAME, gameId, imageNumber, typePuzzle };
 }
 
 export function selectTile(id) {
