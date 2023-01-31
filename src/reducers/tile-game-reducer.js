@@ -1,18 +1,19 @@
 import { configs } from '../configs';
 import {
-    INIT_GAME, REVERSE_TILES, SELECT_TILE, SHUFFLE_TILES, TYPE_GAME
+    INIT_GAME, REVERSE_TILES, MOVE_TILE, SELECT_TILE, SHUFFLE_TILES, TYPE_GAME
 } from './actions';
 import {
     allTilesAreAligned,
     generateTileSet,
     reverseTileSet,
     shuffleTileSet,
-    swapTilesInSet
+    swapTilesInSet,
+    tileIsValidForMovement,
 } from './tileset-functions';
 import { CountImages } from '../constants';
 
 const initialState = {
-    turnNo: 1,
+    moves: 1,
     numClicksWithinTurn: 0,
     selectedId: undefined,
     gameComplete: false,
@@ -23,6 +24,8 @@ const initialState = {
     gameName: undefined,
     typePuzzle: null,
 };
+
+const emptyTileId = 0;
 
 function tileGame(state = initialState, action) {
     switch (action.type) {
@@ -50,6 +53,18 @@ function tileGame(state = initialState, action) {
                     tiles: generateTileSet(size),
                     typePuzzle: action.typePuzzle,
                 });
+        }
+
+        case MOVE_TILE: {
+            if (state.gameComplete || !tileIsValidForMovement(action.payload.id, state.size, state.tiles)) {
+                return state;
+            }
+
+            return Object.assign({}, state, {
+                moves: state.moves + 1,
+                tiles: swapTilesInSet(state.tiles, emptyTileId, action.payload.id),
+                gameComplete: allTilesAreAligned(state.tiles)
+            })
         }
 
         case SELECT_TILE: {
@@ -85,7 +100,7 @@ function tileGame(state = initialState, action) {
                 selectedId: undefined,
                 numClicksWithinTurn: 0,
                 gameComplete,
-                turnNo: state.turnNo + 1,
+                moves: state.moves + 1,
                 tiles: setWithSwappedTiles
             });
         }
