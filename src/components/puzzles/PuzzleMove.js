@@ -1,13 +1,15 @@
 import React from 'react';
 import Status from '../Status';
-import Puzzle from '../Puzzle';
 import RestartBlock from '../RestartBlock';
 import PropTypes from 'prop-types';
+import PuzzleViewMove from '../PuzzleViewMove';
+import FullImage from '../FullImage';
 
 const PuzzleMove = (props) =>
     <div className='puzzle-move'>
         <Status />
-        <Puzzle />
+        <PuzzleViewMove />
+        <FullImage />
         <RestartBlock typePuzzle={props.typePuzzle}/>
     </div>
 

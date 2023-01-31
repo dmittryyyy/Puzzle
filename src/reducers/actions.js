@@ -13,6 +13,10 @@ export function initGame(gameId, imageNumber, typePuzzle) {
     return { type: INIT_GAME, gameId, imageNumber, typePuzzle };
 }
 
+export function moveTile(id) {
+    return { type: MOVE_TILE, id };
+}
+
 export function selectTile(id) {
     return { type: SELECT_TILE, id };
 }

@@ -77,8 +77,20 @@
     margin-left: 12px;
 }
 
+.full-image {
+    overflow: hidden;
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+}
+
+.full-image .img {
+    max-width: initial;
+}
+
 .footer {
     background: #192646;
     text-align: center;
     padding: 2px;
 }
+
