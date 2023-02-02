@@ -9,6 +9,9 @@ import {
     shuffleTileSet,
     swapTilesInSet,
     tileIsValidForMovement,
+    generateTileSetMove,
+    swapTilesInSetMove,
+    allTilesAreAlignedMove,
 } from './tileset-functions';
 import { CountImages } from '../constants';
 
@@ -18,7 +21,8 @@ const initialState = {
     selectedId: undefined,
     gameComplete: false,
     imageNumber: 1,
-    tiles: [],
+    tilesClick: [],
+    tilesMove: [],
     size: undefined,
     gameId: undefined,
     gameName: undefined,
@@ -33,12 +37,13 @@ function tileGame(state = initialState, action) {
             const size = configs[0].size;
             return Object.assign({}, initialState,
                 {
+                    size,
                     typePuzzle: action.typePuzzle,
                     gameId: action.gameId,
-                    size,
                     gameName: configs[0].name,
                     imageNumber: Math.floor(Math.random() * CountImages) + 1,
-                    tiles: generateTileSet(size),
+                    tilesClick: generateTileSet(size),
+                    tilesMove: generateTileSetMove(size),
                 })
         }
 
@@ -46,24 +51,25 @@ function tileGame(state = initialState, action) {
             const size = configs[action.gameId].size;
             return Object.assign({}, initialState,
                 {
-                    gameId: action.gameId,
                     size,
+                    gameId: action.gameId,
                     gameName: configs[action.gameId].name,
                     imageNumber: action.imageNumber,
-                    tiles: generateTileSet(size),
+                    tilesClick: generateTileSet(size),
                     typePuzzle: action.typePuzzle,
+                    tilesMove: generateTileSetMove(size),
                 });
         }
 
         case MOVE_TILE: {
-            if (state.gameComplete || !tileIsValidForMovement(action.payload.id, state.size, state.tiles)) {
+            if (state.gameComplete || !tileIsValidForMovement(action.id, state.size, state.tilesMove)) {
                 return state;
             }
 
             return Object.assign({}, state, {
                 moves: state.moves + 1,
-                tiles: swapTilesInSet(state.tiles, emptyTileId, action.payload.id),
-                gameComplete: allTilesAreAligned(state.tiles)
+                tilesMove: swapTilesInSetMove(state.tilesMove, emptyTileId, action.id),
+                gameComplete: allTilesAreAlignedMove(state.tilesMove),
             })
         }
 
@@ -76,21 +82,21 @@ function tileGame(state = initialState, action) {
             }
             const numClicks = state.numClicksWithinTurn + 1;
             if (numClicks === 1) {
-                const newTiles = state.tiles.map(t => t);
+                const newTiles = state.tilesClick.map(t => t);
                 return Object.assign({}, state, {
                     selectedId: action.id,
                     numClicksWithinTurn: numClicks,
                     gameComplete: false,
-                    tiles: newTiles
+                    tilesClick: newTiles
                 });
             }
 
-            const newTiles = state.tiles.map(t => t);
+            const newTiles = state.tilesClick.map(t => t);
             if (action.id === state.selectedId) {
                 return Object.assign({}, state, {
                     selectedId: undefined,
                     numClicksWithinTurn: 0,
-                    tiles: newTiles
+                    tilesClick: newTiles
                 });
             }
             const setWithSwappedTiles = swapTilesInSet(newTiles, state.selectedId, action.id);
@@ -101,18 +107,18 @@ function tileGame(state = initialState, action) {
                 numClicksWithinTurn: 0,
                 gameComplete,
                 moves: state.moves + 1,
-                tiles: setWithSwappedTiles
+                tilesClick: setWithSwappedTiles
             });
         }
 
         case SHUFFLE_TILES: {
-            const newTiles = shuffleTileSet(state.tiles);
-            return Object.assign({}, state, { tiles: newTiles });
+            const newTiles = shuffleTileSet(state.tilesClick, state.tilesMove);
+            return Object.assign({}, state, { tilesClick: newTiles, tilesMove: newTiles });
         }
 
         case REVERSE_TILES: {
-            const newTiles = reverseTileSet(state.tiles);
-            return Object.assign({}, state, { tiles: newTiles });
+            const newTiles = reverseTileSet(state.tilesClick, state.tilesMove);
+            return Object.assign({}, state, { tilesClick: newTiles, tilesMove: newTiles });
         }
 
         default:

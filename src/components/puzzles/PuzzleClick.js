@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const PuzzleClick = (props) =>
     <div className='puzzle-click'>
         <Status />
-        <Puzzle />
+        <Puzzle typePuzzle={props.typePuzzle}/>
         <RestartBlock typePuzzle={props.typePuzzle}/>
     </div>
 

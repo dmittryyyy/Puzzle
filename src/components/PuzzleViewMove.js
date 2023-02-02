@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { PuzzleWidth } from '../constants';
-import TileViewMove from './TileVieMove';
+import TileView from './TileView';
 import PropTypes from 'prop-types';
 import { moveTile } from '../reducers/actions';
 
@@ -19,14 +19,15 @@ const PuzzleMove = (props) => {
             <div className='tile-wrapper' style={tileWrapperStyle}>
                 <div className='tiles__items' style={tileContainerStyle}>
                     {
-                        props.tiles.map((t, idx) =>
-                            <TileViewMove key={idx}
-                                id={t.id}
-                                isCorrectPos={t === (idx + 1)}
+                        props.tilesMove.map((tile, i) =>
+                            <TileView key={i}
+                                id={tile.id}
+                                isCorrectPos={tile === (i + 1)}
                                 imageNumber={props.imageNumber}
                                 onClick={props.onTileClicked}
                                 tileWidth={tileWidth}
                                 size={props.size}
+                                typePuzzle={props.typePuzzle}
                             />)
                     }
                 </div>
@@ -38,14 +39,15 @@ const PuzzleMove = (props) => {
 PuzzleMove.propTypes = {
     onTileClicked: PropTypes.func,
     size: PropTypes.number,
-    tiles: PropTypes.array,
-    imageNumber: PropTypes.number
+    tilesMove: PropTypes.array,
+    imageNumber: PropTypes.number,
+    typePuzzle: PropTypes.string,
 };
 
 const mapStateToProps = state => {
     return {
         imageNumber: state.imageNumber,
-        tiles: state.tiles,
+        tilesMove: state.tilesMove,
         size: state.size,
     }
 }

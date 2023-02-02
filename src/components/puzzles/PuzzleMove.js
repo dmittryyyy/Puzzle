@@ -8,7 +8,7 @@ import FullImage from '../FullImage';
 const PuzzleMove = (props) =>
     <div className='puzzle-move'>
         <Status />
-        <PuzzleViewMove />
+        <PuzzleViewMove typePuzzle={props.typePuzzle}/>
         <FullImage />
         <RestartBlock typePuzzle={props.typePuzzle}/>
     </div>

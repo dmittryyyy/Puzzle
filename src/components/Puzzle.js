@@ -23,16 +23,17 @@ const Puzzle = (props) => {
             <div className='tiles-wrapper' style={tileWrapperStyle}>
                 <div className='tiles__items' style={tileContainerStyle}>
                     {
-                        props.tiles.map((t, idx) =>
-                            <TileView key={idx}
-                                id={t.id}
-                                correctPos={t.id === idx}
+                        props.tilesClick.map((tile, i) =>
+                            <TileView key={i}
+                                id={tile.id}
+                                correctPos={tile.id === i}
                                 imageNumber={props.imageNumber}
                                 onClick={props.onTileClicked}
                                 tileWidth={tileWidth}
                                 size={props.size}
-                                selected={props.selectedId === t.id}
+                                selected={props.selectedId === tile.id}
                                 width={width}
+                                typePuzzle={props.typePuzzle}
                             />)
                     }
                 </div>
@@ -44,15 +45,16 @@ const Puzzle = (props) => {
 Puzzle.propTypes = {
     onTileClicked: PropTypes.func,
     size: PropTypes.number,
-    tiles: PropTypes.array,
+    tilesClick: PropTypes.array,
     imageNumber: PropTypes.number,
-    selectedId: PropTypes.number
+    selectedId: PropTypes.number,
+    typePuzzle: PropTypes.string,
 };
 
 const mapStateToProps = state => {
     return {
         size: state.size,
-        tiles: state.tiles,
+        tilesClick: state.tilesClick,
         imageNumber: state.imageNumber,
         selectedId: state.selectedId
     }
