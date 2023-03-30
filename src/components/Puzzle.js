@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TileView from './TileView';
-import { selectTile } from '../reducers/actions';
+import { selectTile, clickTile } from '../reducers/actions';
 import PropTypes from 'prop-types';
 import {
     useWindowSize
@@ -23,12 +23,12 @@ const Puzzle = (props) => {
             <div className='tiles-wrapper' style={tileWrapperStyle}>
                 <div className='tiles__items' style={tileContainerStyle}>
                     {
-                        props.tilesClick.map((tile, i) =>
+                        props.tiles.map((tile, i) =>
                             <TileView key={i}
                                 id={tile.id}
-                                correctPos={tile.id === i}
+                                correctPos={ props.typePuzzle === 'click' ? tile.id === i : tile === (i + 1) }
                                 imageNumber={props.imageNumber}
-                                onClick={props.onTileClicked}
+                                onClick={props.typePuzzle === 'click' ? props.onTileSelect : props.onTileClick}
                                 tileWidth={tileWidth}
                                 size={props.size}
                                 selected={props.selectedId === tile.id}
@@ -43,9 +43,10 @@ const Puzzle = (props) => {
 }
 
 Puzzle.propTypes = {
-    onTileClicked: PropTypes.func,
+    onTileSelect: PropTypes.func,
+    onTileClick: PropTypes.func,
     size: PropTypes.number,
-    tilesClick: PropTypes.array,
+    tiles: PropTypes.array,
     imageNumber: PropTypes.number,
     selectedId: PropTypes.number,
     typePuzzle: PropTypes.string,
@@ -54,7 +55,7 @@ Puzzle.propTypes = {
 const mapStateToProps = state => {
     return {
         size: state.size,
-        tilesClick: state.tilesClick,
+        tiles: state.tiles,
         imageNumber: state.imageNumber,
         selectedId: state.selectedId
     }
@@ -62,8 +63,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onTileClicked: id => {
+        onTileSelect: id => {
             dispatch(selectTile(id));
+        },
+        onTileClick: id => {
+            dispatch(clickTile(id));
         }
     }
 }

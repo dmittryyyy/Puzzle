@@ -1,5 +1,4 @@
 import shuffle from 'shuffle-array';
-import { isSolvable } from './solvableChecker';
 
 export function generateTileSet(size) {
     let newTilesArray = [];
@@ -14,24 +13,6 @@ export function generateTileSet(size) {
     return newTilesArray;
 }
 
-export function generateTileSetMove(size, doShuffling) {
-    let newTilesArray = [];
-    for (let i = 0; i < size * size; i++) {
-        newTilesArray[i] = i + 1;
-    }
-    const blankTileIdx = size * size - 1;
-    newTilesArray[blankTileIdx] = 0;
-
-    if (doShuffling) {
-        let solvable = false;
-        while (!solvable) {
-            newTilesArray = shuffle(newTilesArray);
-            solvable = isSolvable(size, newTilesArray);
-        }
-    }
-    return newTilesArray;
-}
-
 export function tileIsValidForMovement(id, size, tiles) {
     if (id < 1 || id > size * size - 1) {
         return false;
@@ -39,55 +20,34 @@ export function tileIsValidForMovement(id, size, tiles) {
     return tileIsMovable(size, id, tiles);
 }
 
-export function swapTilesInSetMove(tiles, sourceId, destId) {
-    let sourceIdx = tiles.findIndex((t) => t === sourceId);
-    let source = tiles[sourceIdx];
-    let destIdx = tiles.findIndex((t) => t === destId);
-    let dest = tiles[destIdx];
-    tiles[destIdx] = source;
-    tiles[sourceIdx] = dest;
-    return tiles;
-}
-
-export function allTilesAreAlignedMove(tiles) {
-    for (let i = 0; i < tiles.length; i++) {
-        if (tiles[i] !== 0 && tiles[i] !== i + 1) {
-            return false;
-        }
-    }
-    return true;
-}
-
 export function tileIsMovable(size, id, tiles) {
-    const idx = tiles.findIndex((t) => t === id);
+    const idx = tiles.findIndex((t) => t.id === id);
     const row = Math.floor(idx / size);
+    const col = idx % size;
     if (row < size - 1) {
         // Check below
-        if (tiles[idx + size] === 0) {
+        if (tiles[idx + size].id === 0) {
             return true;
         }
     }
     if (row > 0) {
         // Check above
-        if (tiles[idx - size] === 0) {
+        if (tiles[idx - size].id === 0) {
             return true;
         }
     }
-    const col = idx % size;
-
     if (col < size - 1) {
         // check to the right
-        if (tiles[idx + 1] === 0) {
+        if (tiles[idx + 1].id === 0) {
             return true;
         }
     }
     if (col > 0) {
         // check to the left
-        if (tiles[idx - 1] === 0) {
+        if (tiles[idx - 1].id === 0) {
             return true;
         }
     }
-
     return false;
 }
 
@@ -100,6 +60,7 @@ export function shuffleTileSet(tiles) {
 }
 
 export function swapTilesInSet(tiles, sourceId, destId) {
+    console.log(tiles, sourceId, destId);
     const copy = [...tiles];
     let sourceIdx = copy.findIndex(t => t.id === sourceId);
     let source = copy[sourceIdx];
@@ -116,5 +77,8 @@ export function allTilesAreAligned(tiles) {
             return false;
         }
     }
+    const emptyTile = document.querySelector('.hide');
+    emptyTile.classList.remove('hide');
+    emptyTile.classList.add('show');
     return true;
 }

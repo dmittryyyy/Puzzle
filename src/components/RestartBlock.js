@@ -5,17 +5,12 @@ import { initGame, shuffleTiles } from '../reducers/actions';
 import PropTypes from 'prop-types';
 
 const RestartBlock = (props) => {
-    if (props.typePuzzle === 'click') {
-        return <div className='restart-block'>
-            <button className='button' onClick={() => props.onInitGame(GameId_4x4, TypePuzzle_Click)}>Restart 4x4</button>
-            <button className='button' onClick={() => props.onInitGame(GameId_5x5, TypePuzzle_Click)}>Restart 5x5</button>
-            <button className='button' onClick={() => props.onInitGame(GameId_6x6, TypePuzzle_Click)}>Restart 6x6</button>
-            <button className='button' onClick={() => props.onInitGame(GameId_7x7, TypePuzzle_Click)}>Restart 7x7</button>
-        </div>;
-    } else {
-        return <div className='restart-block'>
-            <button className='button' onClick={() => props.onInitGame(GameId_4x4, TypePuzzle_Move)}>Restart 4x4</button>
-            <button className='button' onClick={() => props.onInitGame(GameId_5x5, TypePuzzle_Move)}>Restart 5x5</button>
+    if (props.typePuzzle) {
+        return <div className='buttons-wrapper'>
+            <button className='buttons-wrapper__button' onClick={() => props.onInitGame(GameId_4x4, props.typePuzzle === 'click' ? TypePuzzle_Click : TypePuzzle_Move)}>Restart 4x4</button>
+            <button className='buttons-wrapper__button' onClick={() => props.onInitGame(GameId_5x5, props.typePuzzle === 'click' ? TypePuzzle_Click : TypePuzzle_Move)}>Restart 5x5</button>
+            <button className='buttons-wrapper__button' onClick={() => props.onInitGame(GameId_6x6, props.typePuzzle === 'click' ? TypePuzzle_Click : TypePuzzle_Move)}>Restart 6x6</button>
+            <button className='buttons-wrapper__button' onClick={() => props.onInitGame(GameId_7x7, props.typePuzzle === 'click' ? TypePuzzle_Click : TypePuzzle_Move)}>Restart 7x7</button>
         </div>;
     }
 }
