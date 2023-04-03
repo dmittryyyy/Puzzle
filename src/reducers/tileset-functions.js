@@ -60,7 +60,6 @@ export function shuffleTileSet(tiles) {
 }
 
 export function swapTilesInSet(tiles, sourceId, destId) {
-    console.log(tiles, sourceId, destId);
     const copy = [...tiles];
     let sourceIdx = copy.findIndex(t => t.id === sourceId);
     let source = copy[sourceIdx];
@@ -78,7 +77,9 @@ export function allTilesAreAligned(tiles) {
         }
     }
     const emptyTile = document.querySelector('.hide');
-    emptyTile.classList.remove('hide');
-    emptyTile.classList.add('show');
+    if (emptyTile) {
+        emptyTile.classList.remove('hide');
+        emptyTile.classList.add('show');
+    }
     return true;
 }

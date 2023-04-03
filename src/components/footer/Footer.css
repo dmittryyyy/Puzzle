@@ -3,3 +3,8 @@
   text-align: center;
   padding: 2px;
 }
+
+.footer__game-type {
+  text-align: center;
+  font-weight: 500;
+}

@@ -1,12 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Footer.css';
 
-const Footer = () =>
+const Footer = (props) =>
     <>
         <footer className='footer'>
-            <h1 className='footer'>Footer</h1>
+            <h2 className='footer__game-type'>{props.gameName}</h2>
         </footer>
     </>;
+
+Footer.propTypes = {
+    gameName: PropTypes.string,
+};
 
 export default Footer;

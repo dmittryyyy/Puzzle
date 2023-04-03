@@ -2,17 +2,18 @@ import React from 'react';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {typeGame, shuffleTiles} from '../reducers/actions';
-import {TypePuzzle_Click, TypePuzzle_Move} from '../constants';
-import Status from './status/Status';
+import { connect } from 'react-redux';
+import { typeGame, shuffleTiles } from '../reducers/actions';
+import { TypePuzzle_Click, TypePuzzle_Move } from '../constants';
 import Puzzle from './Puzzle';
 import RestartBlock from './RestartBlock';
 import FullImage from './fullImage/FullImage';
+import GameComplete from './gameComplete/GameComplete';
 
 const Main = (props) =>
     <div className='main'>
-        <Header gameName={props.gameName}/>
+        <Header/>
+        <GameComplete/>
         {!props.typePuzzle ?
             <div className="buttons-wrapper">
                 <button
@@ -28,13 +29,12 @@ const Main = (props) =>
             </div>
             :
             <>
-                <Status/>
                 <Puzzle typePuzzle={props.typePuzzle}/>
                 <RestartBlock typePuzzle={props.typePuzzle}/>
-                {props.typePuzzle === 'move' ?? <FullImage/>}
+                {props.typePuzzle === 'move' && <FullImage/>}
             </>
         }
-        <Footer/>
+        {props.gameName ? <Footer gameName={props.gameName}/> : ''}
     </div>
 
 
@@ -42,12 +42,14 @@ Main.propTypes = {
     gameName: PropTypes.string,
     typePuzzle: PropTypes.string,
     changedPuzzle: PropTypes.func,
+    gameComplete: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
     return {
         gameName: state.gameName,
         typePuzzle: state.typePuzzle,
+        gameComplete: state.gameComplete,
     }
 }
 

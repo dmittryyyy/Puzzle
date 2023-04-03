@@ -32,8 +32,7 @@ const mapStateToProps = state => {
     }
 }
 
-const FullImageView = connect(
-    mapStateToProps
-)(FullImage)
+const FullImageView =
+    connect(mapStateToProps)(FullImage);
 
 export default FullImageView;
