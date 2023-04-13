@@ -1,5 +1,5 @@
 export const PuzzleWidth = 300;
-export const CountImages = 4;
+export const CountImages = 10;
 export const TypePuzzle_Click = 'click';
 export const TypePuzzle_Move = 'move';
 export const GameId_4x4 = 0;

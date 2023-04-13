@@ -23,6 +23,7 @@ function TileView(props) {
             ...style,
             outline: 'none',
             outlineOffset: '0',
+            transform: 'scale(1.02)',
         }
     }
 
