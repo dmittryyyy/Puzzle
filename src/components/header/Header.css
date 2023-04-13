@@ -1,6 +1,44 @@
 .header {
   background: #192646;
   text-align: center;
-  padding: 12px;
-  margin-bottom: 32px;
+  padding: 8px;
+  margin-bottom: 12px;
 }
+
+.header__title {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.header__status {
+  text-align: center;
+}
+
+.header__status-title {
+  margin-bottom: 24px;
+}
+
+.header__status-count {
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.header__status-text {
+  font-size: 32px;
+}
+
+.header__status-number {
+  font-size: 48px;
+}
+
+.header__status-instructions {
+  font-size: 20px;
+  font-weight: 500;
+  transition: all .1s linear;
+}
+
+.header__status-instructions--hide {
+  opacity: 0;
+  max-height: 0;
+}
+

@@ -1,0 +1,33 @@
+.game-complete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.game-complete--show {
+    opacity: 0.8;
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+}
+
+.game-complete__title {
+    font-size: 56px;
+}
+
+.game-complete__text {
+    font-size: 32px;
+}
+
+.game-complete__count {
+    font-size: 56px;
+}
